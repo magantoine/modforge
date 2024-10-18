@@ -11,7 +11,12 @@ from handle_module import load_cache
 def make_module(modn, level):
     __init__ = """"""
     print(f"> making module {modn}")
+    print(modn in sys.modules)
+    if(modn in sys.modules):
+        del sys.modules[modn]
+    print(modn in sys.modules)
     mod = __import__(modn)
+    print(modn in sys.modules)
 
     ## for nested module 
     short_module = modn

@@ -27,13 +27,17 @@ def track(project, module, level):
 
     ## 1) Check the folder exists
     project_spec = load_cache(project)
+
+    print(project_spec)
     
     if(module in project_spec):
         raise ValueError(f"** Module {module} already registered for {project}")
 
 
     mod_path = os.path.join(project_spec["dir_path"], module.replace(".", "/"))
-    print(mod_path)
+
+    print(">"*30, mod_path, "<"*30)
+    
     if(not os.path.exists(mod_path)):
         raise ValueError(f"** Module {module} has no associated folder **")
     
@@ -70,8 +74,9 @@ def untrack(project, module):
 
 
 def init(project, path):
-    cache_file = os.path.join(f".mods/{project}/{project}.json")
-    os.mkdir(f".mods/{project}/")
+    cache_specific_dir = os.path.join(MODFORGE_DIR, f".mods/{project}")
+    os.mkdir(cache_specific_dir)
+    cache_file = os.path.join(cache_specific_dir, f"{project}.json")
     if(os.path.exists(cache_file)):
         raise ValueError(f"** Project {project} already exists **")
     else :
